@@ -6,7 +6,7 @@ from langchain.text_splitter import CharacterTextSplitter
 from langchain.vectorstores import FAISS
 from langchain.chains import LLMChain
 from langchain.chains.question_answering import load_qa_chain
-from langchain.chains.conversational_retrieval.prompts import CONDENSE_QUESTION_PROMPT
+from langchain.chains.conversational_retrieval.prompts import QA_PROMPT, CONDENSE_QUESTION_PROMPT
 from langchain.memory import ConversationBufferMemory
 from langchain.chains import ConversationalRetrievalChain
 from langchain.callbacks import get_openai_callback
@@ -43,7 +43,7 @@ def get_vector_store(text_chunks):
 def get_conversation_chain(vector_store):
     llm = ChatOpenAI()
     question_generator = LLMChain(llm=llm, prompt=CONDENSE_QUESTION_PROMPT)
-    doc_chain = load_qa_chain(llm, chain_type='map_reduce')
+    doc_chain = load_qa_chain(llm, chain_type='stuff', prompt=QA_PROMPT)
 
     memory = ConversationBufferMemory(
         memory_key='chat_history',
