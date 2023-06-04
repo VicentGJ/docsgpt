@@ -3,7 +3,7 @@ import streamlit as st
 import langchain
 from langchain.callbacks import get_openai_callback
 from libs.knowledge_base import get_vector_store
-from libs.text_utils import get_pdf_text, get_text_chunks
+from libs.text_utils import get_text, get_pdf_text, get_docx_text, get_text_chunks
 from libs.ai_utils import get_conversation_chain
 
 langchain.verbose = False
@@ -25,11 +25,17 @@ def main():
         st.session_state.conversation = None
 
     # upload file
-    pdf_docs = st.file_uploader("Upload your PDFs", type="pdf", accept_multiple_files=True)
+    docs = st.file_uploader("Upload your PDFs or DOCXs", type=["pdf", "docx"], accept_multiple_files=True)
 
     # extract the text
     if st.button("Process"):
-        text = get_pdf_text(pdf_docs)
+        text = ""
+        for doc in docs:
+            if doc.type == "application/pdf":
+                text = get_pdf_text(doc)
+            elif doc.type == "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
+                text = get_docx_text(doc)
+            # text += get_text(doc)
 
         # split into chunks
         text_chunks = get_text_chunks(text=text, chunk_size=1000, chunk_overlap=200)
