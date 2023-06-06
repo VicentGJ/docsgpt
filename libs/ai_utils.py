@@ -18,7 +18,7 @@ def get_conversation_chain(vector_store):
 
     chain = ConversationalRetrievalChain(
         retriever=vector_store.as_retriever(),
-        max_tokens_limit=3000,
+        # max_tokens_limit=3000,
         question_generator=question_generator,
         combine_docs_chain=doc_chain,
         memory=memory
