@@ -25,7 +25,7 @@ def main():
         st.session_state.conversation = None
 
     # upload file
-    docs = st.file_uploader("Upload your PDFs or DOCXs", type=["pdf", "docx"], accept_multiple_files=True)
+    docs = st.file_uploader("Upload your PDFs or DOCXs", type=["pdf", "docx", "txt", "odt"], accept_multiple_files=True)
 
     # extract the text
     if st.button("Process"):
@@ -35,7 +35,10 @@ def main():
                 text = get_pdf_text(doc)
             elif doc.type == "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
                 text = get_docx_text(doc)
-            # text += get_text(doc)
+            else:
+                # Other formats allowed by textract: eml, epub, html, json, rtf, txt, odt
+                # TODO Test all the textract formats
+                text += get_text(doc)
 
         # split into chunks
         text_chunks = get_text_chunks(text=text, chunk_size=1000, chunk_overlap=200)
