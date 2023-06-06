@@ -23,12 +23,11 @@ def get_text(doc):
     return text
 
 
-def get_pdf_text(pdf_docs):
+def get_pdf_text(pdf):
     text = ""
-    for pdf in pdf_docs:
-        pdf_reader = PdfReader(pdf)
-        for page in pdf_reader.pages:
-            text += page.extract_text()
+    pdf_reader = PdfReader(pdf)
+    for page in pdf_reader.pages:
+        text += page.extract_text()
     return text
 
 
