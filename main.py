@@ -4,16 +4,17 @@ import langchain
 from langchain.callbacks import get_openai_callback
 from libs.knowledge_base import get_vector_store
 from libs.text_utils import get_text, get_pdf_text, get_docx_text, get_text_chunks
-from libs.ai_utils import get_conversation_chain
+from libs.ai_utils import get_conversation_agent
+
 
 langchain.verbose = False
 
 
 def handle_userinput(user_question):
     with get_openai_callback() as cb:
-        response = st.session_state.conversation({'question': user_question})
+        response = st.session_state.conversation.run(input=user_question)
         print(cb)
-    st.write(response["answer"])
+    st.write(response)
 
 
 def main():
@@ -46,8 +47,9 @@ def main():
         # create embeddings
         vector_store = get_vector_store(text_chunks)
 
-        # create conversation chain
-        st.session_state.conversation = get_conversation_chain(vector_store)
+        # create conversation agent
+        agent = get_conversation_agent(vector_store)
+        st.session_state.conversation = agent
 
     # show user input
     user_question = st.text_input("Ask a question about your docs:")
