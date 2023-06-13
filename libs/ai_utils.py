@@ -33,13 +33,14 @@ def get_qa_chain(llm, vector_store):
 
 def get_conversation_agent(vector_store):
     memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
-    llm = ChatOpenAI(temperature=0)
+    llm = OpenAI(temperature=0)
     chain = get_qa_chain(llm, vector_store)
     tools = [get_qa_tool(chain)]
     agent_chain = initialize_agent(tools, llm,
-                                   agent=AgentType.CHAT_CONVERSATIONAL_REACT_DESCRIPTION,
+                                   agent=AgentType.CONVERSATIONAL_REACT_DESCRIPTION,
                                    verbose=True,
-                                   memory=memory
+                                   memory=memory,
+                                   handle_parsing_errors="Check your output and make sure it conforms!"
                                    )
     fixed_prompt = """
     Assistant is a large language model trained by OpenAI.
@@ -49,6 +50,7 @@ def get_conversation_agent(vector_store):
     
     Assistant is an autonomous agent able to use a variety of tools to assist with a wide range of tasks.
     Assistant must always use a tool to assist with a task, Assistant cannot provide an answer without using a tool.
+    Assistant is able to engange in conversations and remenber the context of previos dialogue. Assistant does not have to use tools to answer a simple question about something that was said before.
     Assistant is able to use the tools at his disposal to gather information and provide answers based on the information that are relevant to the user's question.
     Assistant does not have any knowledge of his own, he cannot provide accurate information to the user without using a tool. 
     Assistant should use a tool to gather the information he needs so he can give the user a relevant answer.
@@ -60,6 +62,6 @@ def get_conversation_agent(vector_store):
     
     Overall, Assistant is a powerful system that can help with a wide range of tasks and provide valuable insights and information.
     """
-    agent_chain.agent.llm_chain.prompt.messages[0].prompt.template = fixed_prompt
+    #agent_chain.agent.llm_chain.prompt.messages[0].prompt.template = fixed_prompt
 
     return agent_chain
