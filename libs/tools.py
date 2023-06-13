@@ -7,7 +7,7 @@ from langchain.chains import RetrievalQA
 
 def get_qa_tool(chain: RetrievalQA) -> Tool:
     return Tool(
-        name='qa_from-docs',
+        name='get_information',
         func=chain.run,
-        description="Use to get the Information needed to answer all questions. Input should be user's question."
+        description="Always use to get the information needed to answer any questions. Input should be user's question."
     )
