@@ -1,0 +1,94 @@
+Edge development group
+
+Developing solutions at the edge of AI and technology, expanding its capabilities and reach without messing with its core.
+
+Why avoid core development?
+
+Core development is expensive and return on investments is long term
+
+Applications are where the good money is for our organization
+
+
+Three main pillars of development:
+
+Pillar 1
+Tools and prototype applications: Leveraging the power of Streamlit and Langchain we could build powerful new tools that expand the capabilities of LLMs in new directions. Easy prototyping will allow us to reach MVP fast and take decisions on the marketability of the idea (either new bespoke products, integration with our and our client’s current portfolio of products, or chatgpt and copilot plugins).
+
+Pillar 2
+Product integration: Develop integration of our developments into popular open-source products or our client's product stacks. It will result in a very visible way of building a reputation in the rising space and boosting the perceived value of our stack.
+
+Pillar 3
+LLM and other AI models finetuning and deployment: Gain experience and know-how in the process of finetuning and deploying open-source AI models for on-premise applications or cheaper on-scale product solutions. This area of expertise will allow us to take advantage of a market crabbing for cheaper more private solutions than the big proprietary LLMs and also benefit the development of open-source and DIY solutions
+
+Our first project DocsGPT:
+
+A tool to help document processing, interaction, and management through a chat interface using the power of LLMs.
+
+How does the work in DocsGPT tribute to each pillar of development:
+
+Pillar 1: DocsGPT on itself is a simple MVP tool designed to serve as a test bed for all kinds of techniques and tools to improve the work with all kinds of documents
+
+Pillar 2: The result of docsgpt can be integrated into NosWork’s tools
+
+Pillar 3: Investigation and testing of open-source AI models and proper integration of them into docsgpt where possible is needed to improve the cost of operation once a critical mass of users is reached.
+
+DocsGPT’s current sprint goals (starting next week as week 1, lasts 2 weeks)
+
+Wrap the qa_retrieval_chain and text_utils inside a Langchain tool (Week 1)
+Refactor the AI chat to use an Agent and tools (Week 1)
+Tool for summarizing (Week 1)
+Develop a tool for Question_Answering over CSV and other sheet formats. (Week 2)
+
+Future areas of work (Three Month roadmap):
+
+Tool for integration with onlyoffice document maker or other open-source solution (Word and Excel formats) (Weeks 3, 4, 5)
+Tool for cloud drive integration (Nextcloud, others to come later) (Week 6)
+Tool for image manipulation (creation, editing, qa) (Weeks 6, 7)
+Optimize the Agent to use multiple tools to read and write documents combining multiple formats (Weeks 8, 9, 10)
+Tool to make presentations in JSON format (Week 10)
+Tool for PowerPoint Generation (Weeks 11, 12, 13)
+
+Regarding resources
+
+Custom PC for model training and inference testing: RTX 3090 + i9 13900K + 32 RAM + 1 TB SSD = 2500 – 3000 USD
+
+Linode GPU instance: 1000 USD per month 24 VRAM RTX 6000
+AWS, Google Cloud and Azure prices for inference and training instances need further study
+HuggingFace Pro should also be taken into consideration, especially given its ease of use.
+
+Cost for proprietary LLMs subscriptions:
+1 OpenAI account 50 dollars per month * Recommended starting price, can be lower if required.
+1 AI21Labs account 30 dollars per month
+1 Google Cloud account for PALM 2 access for 30 dollars per month
+1 Claude AI account (it's subject to a Waitlist) 30 dollars per month
+AWS account for access to Amazon Bedrock and Amazon SageMaker, no cost could be determined
+
+*Cost on subscriptions will decrease significantly once we finish the prototype and testing phase and settle on the most performance and cost-efficient solution
+
+The team we could use right now:
+
+4 students (Work on docsgpt primarily (pillars 1 and 2))
+1 or 2 students (Work on open-source AI models (pillar 3))
+1 DevOps (very partial time, needed only for specific deployment tasks)
+
+* These numbers don’t include me
+* All workers except the DevOps could be interns
+* We currently have two interns working on docsgpt (besides me)
+* Scaling over time is easy as work on docsgpt starts to mature and new development opportunities start popping up
+
+Objectives
+
+    1. Increase the power, expertise, and recognition of our company in this emergent field
+    2. Help increase the competitiveness of the open-source ecosystem in the field
+    3. Create a solid platform for internship work and education
+
+Who is objective 3 possible:
+
+Work on simple code bases.
+Tasks are not very domain specific.
+Simple technology stack.
+Low risk and pressure, but high return.
+Fast iteration and delivery of value.
+The tasks better integrate with the investigation needs of students at school
+It's easy to scale in size once the project starts to pick up strength
+(Most of this benefit only applies to the first pillar of development)
