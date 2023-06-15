@@ -1,4 +1,5 @@
 import io, textract, tempfile, os
+import ai21
 from PyPDF2 import PdfReader
 from langchain.text_splitter import CharacterTextSplitter
 from docx import Document
@@ -49,3 +50,27 @@ def get_text_chunks(text, chunk_size, chunk_overlap):
         length_function=len
     )
     return text_splitter.split_text(text)
+
+
+def get_text_segments(text) -> list[str]:
+    response = ai21.Segmentation.execute(
+        source=text,
+        sourceType='TEXT',
+    )
+    """
+    The execute method of AI21 Studio’s Segmentation API accepts the following parameters:
+        source: The text or URL to be segmented.
+        sourceType: The type of source, either 'text' or 'URL'.
+        model: The model to use for segmentation. Default is 'j1-large'.
+        minTokens: The minimum number of tokens per segment. Default is 4.
+        maxTokens: The maximum number of tokens per segment. Default is 32.
+        numResults: The number of results to return. Default is 1.
+    """
+
+    segments_list = response["segments"]
+    segments = []
+
+    for dict in segments_list:
+        segments.append(dict['segmentText'])
+
+    return segments

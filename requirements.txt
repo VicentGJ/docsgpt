@@ -89,3 +89,4 @@ xlrd==1.2.0
 XlsxWriter==3.1.2
 yarl==1.9.2
 zipp==3.15.0
+ai21==1.1.4
