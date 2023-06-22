@@ -1,9 +1,11 @@
+import ai21
 from langchain.chains import RetrievalQA
 from langchain.agents import AgentType, AgentExecutor
 from langchain.memory import ConversationBufferMemory
 from langchain import OpenAI, PromptTemplate
 from langchain.agents import initialize_agent
 from libs.tools import get_qa_tool, get_summarize_tool
+from libs.text_utils import get_text_segments
 
 
 def get_qa_chain(llm, vector_store):
@@ -52,3 +54,35 @@ def get_agent_for_summary() -> AgentExecutor:
                                    )
 
     return agent_chain
+
+
+def summarize_long_text(text: str) -> str:
+    texts: list[str] = []
+    summary = ""
+    count = 0
+
+    if len(text) > 50000:
+        text_segments = get_text_segments(text)
+
+        while len(text_segments) > 0:
+            texts.append("")
+            while len(text_segments) > 0 and len(text_segments[0]) + len(texts[-1]) < 50000:
+                texts[-1] += text_segments.pop(0)
+    else:
+        texts.append(text)
+
+    for text in texts:
+        print(len(text))
+        result = ai21.Summarize.execute(
+        source=text,
+        sourceType="TEXT"
+        )
+        summary += result['summary']
+        count += 1
+
+    if count > 1:
+        summary = summarize_long_text(summary)
+
+    return summary
+
+

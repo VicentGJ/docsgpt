@@ -1,7 +1,6 @@
 import ai21
 from langchain.agents import Tool
 from langchain.chains import RetrievalQA
-from langchain.agents import tool
 
 
 def get_qa_tool(chain: RetrievalQA) -> Tool:
