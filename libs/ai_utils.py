@@ -59,7 +59,7 @@ def get_agent_for_summary() -> AgentExecutor:
 def summarize_long_text(text: str) -> str:
     texts: list[str] = []
     summary = ""
-    count = 0
+    onlyOneText = False
 
     if len(text) > 50000:
         text_segments = get_text_segments(text)
@@ -69,6 +69,7 @@ def summarize_long_text(text: str) -> str:
             while len(text_segments) > 0 and len(text_segments[0]) + len(texts[-1]) < 50000:
                 texts[-1] += text_segments.pop(0)
     else:
+        flag = True
         texts.append(text)
 
     for text in texts:
@@ -78,9 +79,8 @@ def summarize_long_text(text: str) -> str:
         sourceType="TEXT"
         )
         summary += result['summary']
-        count += 1
 
-    if count > 1:
+    if not onlyOneText:
         summary = summarize_long_text(summary)
 
     return summary
