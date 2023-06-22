@@ -56,10 +56,14 @@ def get_agent_for_summary() -> AgentExecutor:
     return agent_chain
 
 
-def summarize_long_text(text: str) -> str:
+def summarize_long_text(text: str, type_of_text: str) -> str:
+    """
+    The parameter type_of_text must be "TEXT" or "URL"
+    """
+
     texts: list[str] = []
     summary = ""
-    onlyOneText = False
+    only_one_text_segment = False
 
     if len(text) > 50000:
         text_segments = get_text_segments(text)
@@ -69,20 +73,23 @@ def summarize_long_text(text: str) -> str:
             while len(text_segments) > 0 and len(text_segments[0]) + len(texts[-1]) < 50000:
                 texts[-1] += text_segments.pop(0)
     else:
-        flag = True
+        only_one_text_segment = True
         texts.append(text)
 
     for text in texts:
         print(len(text))
         result = ai21.Summarize.execute(
         source=text,
-        sourceType="TEXT"
+        sourceType=type_of_text
         )
         summary += result['summary']
 
-    if not onlyOneText:
-        summary = summarize_long_text(summary)
+    if not only_one_text_segment:
+        summary = summarize_long_text(summary, type_of_text)
+
+    # TODO Catch exceptions for text too long, text that cannot be processed, url without permission, ...
 
     return summary
+
 
 
