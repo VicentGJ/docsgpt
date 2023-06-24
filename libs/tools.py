@@ -2,6 +2,7 @@ from langchain.agents import initialize_agent, Tool
 from langchain.agents import AgentType
 from langchain.tools import BaseTool
 from langchain.llms import OpenAI
+from langchain.chat_models import ChatOpenAI
 from langchain.chains import RetrievalQA
 from langchain.agents.agent import AgentExecutor
 from libs.table_formats_agent import create_table_format_agent
@@ -36,7 +37,7 @@ def get_table_tool_by_route(route_user_file: str) -> Tool:
     return Tool(
         name='get_csv_information',
         func=agent.run,
-        description="A search tool. Mandatory to find information that is relevant to the user's question inside a csv, xlsx or ods document. The entry must be a search query."
+        description="A search tool. Mandatory to find information that is relevant to the user's question inside sheets and tables. Input must be a search query."
     )
 
 
@@ -48,7 +49,7 @@ def get_table_tool_by_file(user_file) -> Tool:
         temp_path = temp_file.name
 
     agent: AgentExecutor = create_table_format_agent(
-        OpenAI(temperature=0),
+        ChatOpenAI(temperature=0),
         temp_path,
         extension=user_file.name.split(".")[-1],
         verbose=False,
