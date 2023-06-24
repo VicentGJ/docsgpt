@@ -23,10 +23,10 @@ from libs.ai_utils import get_qa_chain
 
 def get_temporary_agent(file_route):
     memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
-    llm = OpenAI(temperature=0)
+    llm = ChatOpenAI(temperature=0)
     tools = [get_table_tool_by_route(file_route)]
     agent_chain = initialize_agent(tools, llm,
-                                   agent=AgentType.CONVERSATIONAL_REACT_DESCRIPTION,
+                                   agent=AgentType.CHAT_CONVERSATIONAL_REACT_DESCRIPTION,
                                    verbose=True,
                                    memory=memory,
                                    handle_parsing_errors="Check your output and make sure it conforms!"
@@ -41,8 +41,9 @@ file_route = "demo\Ventas del año.xlsx"
 
 agent = get_temporary_agent(file_route)
 agent.run("Cuantas filas tiene el documento")
-agent.run('Cuales en que mes se obtuvieron las mayores ventas y cual es su valor')
+agent.run('En que mes hubo más ventas?')
 agent.run("Cuales fueron las ventas totales del año")
+agent.run("Cual es el valor de produccion promedio")
 agent.run("Como se llama la novia de Leonardo di Caprio?")
 
 # text = ''
