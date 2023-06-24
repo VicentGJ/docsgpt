@@ -2,3 +2,4 @@ venv/
 .env
 *.pyc
 .idea/
+temporal_file_of_data*
