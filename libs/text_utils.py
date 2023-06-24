@@ -52,16 +52,34 @@ def get_text_chunks(text, chunk_size, chunk_overlap):
     return text_splitter.split_text(text)
 
 
-def get_text_segments(text) -> list[str]:
-    response = ai21.Segmentation.execute(
-        source=text,
-        sourceType='TEXT'
-    )
-
-    segments_list = response["segments"]
+def get_text_segments(source: str, sourceType: str) -> list[str]:
+    """
+    The parameter sourceType must be "TEXT" or "URL"
+    """
     segments = []
+    texts: list[str] = [source]
+    i = 0
 
-    for dict in segments_list:
-        segments.append(dict['segmentText'])
+    while sourceType == "TEXT" and i < len(texts):
+        if len(texts[i]) > 100000:
+            middle_index = int(len(texts[i]) / 2)
+            first_half = texts[i][:middle_index]
+            second_half = texts[i][middle_index:]
+            index = texts.index(texts[i])
+            texts.remove(texts[i])
+            texts.insert(index, second_half)
+            texts.insert(index, first_half)
+        else:
+            i += 1
+
+    for text in texts:
+        response = ai21.Segmentation.execute(
+            source=text,
+            sourceType=sourceType
+        )
+        segments_list = response["segments"]
+        for dict in segments_list:
+            segments.append(dict['segmentText'])
 
     return segments
+

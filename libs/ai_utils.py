@@ -1,4 +1,5 @@
 import ai21
+from ai21.errors import APIError
 from langchain.chains import RetrievalQA
 from langchain.agents import AgentType, AgentExecutor
 from langchain.memory import ConversationBufferMemory
@@ -56,40 +57,57 @@ def get_agent_for_summary() -> AgentExecutor:
     return agent_chain
 
 
-def summarize_long_text(text: str, type_of_text: str) -> str:
-    """
-    The parameter type_of_text must be "TEXT" or "URL"
-    """
-
+def summarize_long_text(text: str) -> str:
     texts: list[str] = []
     summary = ""
-    only_one_text_segment = False
+    only_one_text_segment = True
 
     if len(text) > 50000:
-        text_segments = get_text_segments(text)
+        only_one_text_segment = False
+        text_segments = get_text_segments(text, "TEXT")
 
         while len(text_segments) > 0:
             texts.append("")
             while len(text_segments) > 0 and len(text_segments[0]) + len(texts[-1]) < 50000:
                 texts[-1] += text_segments.pop(0)
     else:
-        only_one_text_segment = True
         texts.append(text)
 
-    for text in texts:
-        print(len(text))
-        result = ai21.Summarize.execute(
-        source=text,
-        sourceType=type_of_text
-        )
-        summary += result['summary']
+    for item in texts:
+        summary += summarize_a121(item, "TEXT")
 
     if not only_one_text_segment:
-        summary = summarize_long_text(summary, type_of_text)
-
-    # TODO Catch exceptions for text too long, text that cannot be processed, url without permission, ...
+        summary = summarize_long_text(summary)
 
     return summary
 
 
+def summarize_url(url: str) -> str:
+    summary = summarize_a121(url, "URL")
 
+    if summary.find("exceeds max character limit: 50,000") != -1:
+        segments = get_text_segments(url, "URL")
+        text = ""
+
+        for item in segments:
+            text += item
+
+        summary = summarize_long_text(text)
+
+    return summary
+
+
+def summarize_a121(source: str, sourceType: str) -> str:
+    """
+    The parameter sourceType must be "TEXT" or "URL"
+    """
+    try:
+        result = ai21.Summarize.execute(
+            source=source,
+            sourceType=sourceType
+        )
+        return result['summary']
+    except APIError as e:
+        return e.details
+    except Exception as e:
+        return str(e)

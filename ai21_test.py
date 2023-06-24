@@ -478,11 +478,12 @@ At the end of the meeting, it is clear that there are many more stories that cou
 """
 
 
-text = "https://en.wikipedia.org/wiki/Love_at_First_Sight_(Kylie_Minogue_song)"
+text = "https://en.wikipedia.org/wiki/Elvis_Presley"
 
 
 # agent = get_agent_for_summary()
 # agent.run(f"Haz un resumen del texto: {text}.")
 
-print(libs.ai_utils.summarize_long_text(text, "URL"))
+# print(libs.ai_utils.summarize_long_text(text))
+print(libs.ai_utils.summarize_url(text))
 
