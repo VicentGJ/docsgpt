@@ -1,6 +1,7 @@
-import ai21
 from langchain.agents import Tool
 from langchain.chains import RetrievalQA
+from libs.text_utils import get_text_from_path, get_text_from_file
+from libs.summarization import summarize_long_text, summarize_url
 
 
 def get_qa_tool(chain: RetrievalQA) -> Tool:
@@ -11,18 +12,33 @@ def get_qa_tool(chain: RetrievalQA) -> Tool:
     )
 
 
-def get_summarize_tool() -> Tool:
-
-    def get_summarize_func(text: str) -> str:
-        summary = ai21.Summarize.execute(
-            source=text,
-            sourceType="TEXT"
-        )
-
-        return summary
-
+def get_summarize_file_tool() -> Tool:
     return Tool(
-        name="Summarize",
-        func=get_summarize_func,
-        description="A tool to summarize english text. Use it when the user wants the summary of a piece of english text or the user wants the main idea of an english text. Input should be a piece of text in English."
+        name="summarize_file",
+        func=summarize_file,
+        description=""
     )
+
+
+def get_summarize_url_tool() -> Tool:
+    return Tool(
+        name='summarize_url',
+        func=summarize_url,
+        description=""
+    )
+
+
+def get_summarize_file_from_path_tool() -> Tool:
+    return Tool(
+        name='summarize_file_from_path',
+        func=summarize_file_from_path,
+        description=""
+    )
+
+
+def summarize_file_from_path(path: str) -> str:
+    return summarize_long_text(get_text_from_path(path))
+
+
+def summarize_file(file) -> str:
+    return summarize_long_text(get_text_from_file(file))
