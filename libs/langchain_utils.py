@@ -3,7 +3,7 @@ from langchain.agents import AgentType, AgentExecutor
 from langchain.memory import ConversationBufferMemory
 from langchain import OpenAI, PromptTemplate
 from langchain.agents import initialize_agent
-from libs.tools import get_qa_tool, get_summarize_tool
+from libs.tools import get_qa_tool
 
 
 def get_qa_chain(llm, vector_store):
@@ -30,20 +30,6 @@ def get_conversation_agent(vector_store) -> AgentExecutor:
     llm = OpenAI(temperature=0)
     chain = get_qa_chain(llm, vector_store)
     tools = [get_qa_tool(chain)]
-    agent_chain = initialize_agent(tools, llm,
-                                   agent=AgentType.CONVERSATIONAL_REACT_DESCRIPTION,
-                                   verbose=True,
-                                   memory=memory,
-                                   handle_parsing_errors="Check your output and make sure it conforms!"
-                                   )
-
-    return agent_chain
-
-
-def get_agent_for_summary() -> AgentExecutor:
-    memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
-    llm = OpenAI(temperature=0)
-    tools = [get_summarize_tool()]
     agent_chain = initialize_agent(tools, llm,
                                    agent=AgentType.CONVERSATIONAL_REACT_DESCRIPTION,
                                    verbose=True,
