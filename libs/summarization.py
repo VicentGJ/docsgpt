@@ -1,6 +1,6 @@
 import ai21
 from ai21.errors import APIError
-from libs.text_utils import get_text_segments
+from libs.text_utils import get_text_segments, translate_text, detect_text_language
 
 
 def summarize_long_text(text: str) -> str:
@@ -20,7 +20,7 @@ def summarize_long_text(text: str) -> str:
         texts.append(text)
 
     for item in texts:
-        summary += summarize_a121(item, "TEXT")
+        summary += summarize_a121(item, "TEXT", detect_text_language(item))
 
     if not only_one_text_segment:
         summary = summarize_long_text(summary)
@@ -43,16 +43,24 @@ def summarize_url(url: str) -> str:
     return summary
 
 
-def summarize_a121(source: str, sourceType: str) -> str:
+def summarize_a121(source: str, source_type: str, source_lang: str = 'en') -> str:
     """
-    The parameter sourceType must be "TEXT" or "URL"
+    The parameter source_type must be "TEXT" or "URL"
     """
+    if source_lang != 'en':
+        source = translate_text(source, 'en')
+
     try:
         result = ai21.Summarize.execute(
             source=source,
-            sourceType=sourceType
+            sourceType=source_type
         )
-        return result['summary']
+        summary = result['summary']
+
+        if source_lang != 'en':
+            summary = translate_text(summary, source_lang)
+
+        return summary
     except APIError as e:
         return e.details
     except Exception as e:

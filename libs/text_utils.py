@@ -3,6 +3,7 @@ import ai21
 from PyPDF2 import PdfReader
 from langchain.text_splitter import CharacterTextSplitter
 from docx import Document
+from googletrans import Translator
 
 
 def get_text_from_file(file):
@@ -111,3 +112,14 @@ def extract_text(file_path: str) -> str:
     # Extract the text from the temporary file using textract
     text = textract.process(file_path, extension=extension).decode('utf-8')
     return text
+
+
+def translate_text(text: str, dest: str) -> str:
+    trans = Translator()
+    resp = trans.translate(text=text, dest=dest)
+    return resp.text
+
+
+def detect_text_language(text: str) -> str:
+    trans = Translator()
+    return trans.detect(text).lang
