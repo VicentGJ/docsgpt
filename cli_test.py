@@ -34,7 +34,6 @@ def get_temporary_agent(file_route):
 
     return agent_chain
 
-
 load_dotenv()
 
 file_route = "demo\Ventas del año.xlsx"
