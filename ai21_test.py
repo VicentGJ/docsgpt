@@ -20,4 +20,4 @@ text = "demo/Prerrequisitos del AEF.pdf"
 # print(libs.ai_utils.summarize_long_text(text))
 # print(libs.ai_utils.summarize_url(text))
 # print(libs.tools.summarize_file_from_path(text))
-print(libs.tools.summarize_long_text(text))
+print(libs.tools.summarize_file_from_path(text))
