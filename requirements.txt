@@ -5,3 +5,4 @@ streamlit==1.22.0
 textract==1.6.5
 ai21==1.1.4
 googletrans~=3.1.0a0
+openai~=0.27.7

@@ -1,25 +1,10 @@
 from dotenv import load_dotenv
-import langchain
-import textract
-from langchain.callbacks import get_openai_callback
-from libs.knowledge_base import get_vector_store
-from libs.text_utils import get_text, get_pdf_text, get_docx_text, get_text_chunks
-
-import csv
-import tempfile
-import pandas as pd
-from libs.text_utils import get_text
 from libs.tools import get_table_tool_by_route
-from langchain.chains import LLMChain
-from langchain.chains import RetrievalQA
-from langchain.chains.conversational_retrieval.prompts import QA_PROMPT, CONDENSE_QUESTION_PROMPT
 from langchain.chat_models import ChatOpenAI
 from langchain.agents import AgentType
 from langchain.memory import ConversationBufferMemory
-from langchain import OpenAI, PromptTemplate
-from langchain.utilities import SerpAPIWrapper
 from langchain.agents import initialize_agent
-from libs.ai_utils import get_qa_chain
+
 
 def get_temporary_agent(file_route):
     memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
@@ -34,9 +19,10 @@ def get_temporary_agent(file_route):
 
     return agent_chain
 
+
 load_dotenv()
 
-file_route = "demo\Ventas del año.xlsx"
+file_route = "demo/Ventas del año.xlsx"
 
 agent = get_temporary_agent(file_route)
 agent.run("Cuantas filas tiene el documento")

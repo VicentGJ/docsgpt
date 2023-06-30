@@ -3,6 +3,6 @@ from langchain.embeddings.openai import OpenAIEmbeddings
 
 
 def get_vector_store(text_chunks):
-    embeddings = OpenAIEmbeddings()
-    vector_store = FAISS.from_texts(text_chunks, embeddings)
+    embedding = OpenAIEmbeddings()
+    vector_store = FAISS.from_texts(text_chunks, embedding)
     return vector_store

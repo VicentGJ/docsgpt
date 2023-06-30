@@ -2,10 +2,11 @@ from dotenv import load_dotenv
 import streamlit as st
 import langchain
 from langchain.callbacks import get_openai_callback
+from openai import Embedding
+
 from libs.knowledge_base import get_vector_store
 from libs.text_utils import get_text_from_file, get_pdf_text, get_docx_text, get_text_chunks
 from libs.langchain_utils import get_conversation_agent
-
 
 langchain.verbose = False
 
