@@ -1,0 +1,34 @@
+cookie:
+  expiry_days: 30
+  key: some_signature_key
+  name: some_cookie_name
+credentials:
+  usernames:
+    cdvillaseca:
+      email: carlosd.villaseca@avangenio.com
+      name: Carlos Daniel Villaseca
+      password: $2b$12$a/EmrK.G6w//p1pTO1WJe.ZAaQj4tig6Xy0dkYtsTut96kXDWNVaK
+    dchico:
+      email: daniel.chico@avangenio.com
+      name: Daniel Chico
+      password: $2b$12$xlTDb7eXYOHMSa4u9JPKfuCuJCd2fADc6vGV5YjhBc.OSFNU5/dne
+    igonzalez:
+      email: isabella.gonzalez@avangenio.com
+      name: Isabella Gonzalez
+      password: $2b$12$uRcsd8diE0DWth3RwUwvN.usMx0PjzFedx8XWjhrOmZgi0scW9x9q
+    jsmith:
+      email: jsmith@gmail.com
+      name: John Smith
+      password: $2b$12$Y7Mv7xm9aX0iwroO59bPV.PiARdSLhW/I1uXnicTd1oc/qnhegaaK
+    lgonzalez:
+      email: laura.gonzalez@avangenio.com
+      name: Laura Gonzalez
+      password: $2b$12$DsweKYlto8D49ypCTVB6Te8GeAOfrG6roS8e9kxLE7GTMfgSbY/r.
+    rbriggs:
+      email: rbriggs@gmail.com
+      name: Rebecca Briggs
+      password: $2b$12$61DvToocya/DUtZX62na5uyGoKh.hakVkIORRznB8mVrxdZ1Xzqoi
+    roropesa:
+      email: richard.oropesa@avangenio.com
+      name: Richard Oropesa
+      password: $2b$12$xVazoJj1GqxItAKzuZ6K2OsLSO1gCHbzoy/2K5In5y16jYxU2fXCe
